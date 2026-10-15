@@ -48,9 +48,9 @@ jobs:
         run: |
           sudo apt-get update -qq
           PKGS="bc bison build-essential ccache curl flex g++-multilib gcc-multilib \
-                git gnupg gperf imagemagick lib32ncurses5-dev lib32ncurses-dev \
+                git gnupg gperf imagemagick lib32ncurses-dev \
                 lib32readline-dev lib32z1-dev libelf-dev liblz4-tool \
-                libncurses5 libncurses5-dev libncurses-dev libsdl1.2-dev \
+                libncurses-dev libsdl1.2-dev \
                 libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool \
                 squashfs-tools xsltproc zip zlib1g-dev python3 python-is-python3 \
                 openjdk-11-jdk unzip git-lfs"
@@ -63,6 +63,16 @@ jobs:
             printf '%-8s %s\n' "$t" "$(command -v "$t" || echo MISSING)"
           done
           ls -d /usr/lib/jvm/java-11-openjdk-* || true
+
+      - name: Provide legacy libncurses5/libtinfo5 (old prebuilt clang)
+        # Ubuntu 24.04 only ships the .so.6 versions, but the RenderScript
+        # prebuilt clang-3289846 is linked against .so.5.
+        run: |
+          LIBDIR=/usr/lib/x86_64-linux-gnu
+          sudo ln -sf "$LIBDIR/libncurses.so.6" "$LIBDIR/libncurses.so.5"
+          sudo ln -sf "$LIBDIR/libtinfo.so.6"   "$LIBDIR/libtinfo.so.5"
+          sudo ldconfig
+          ls -l "$LIBDIR/libncurses.so.5" "$LIBDIR/libtinfo.so.5"
 
       - name: Restore ccache
         uses: actions/cache@v4
@@ -89,6 +99,7 @@ jobs:
           echo "USE_CCACHE=1"     >> "$GITHUB_ENV"
           echo "CCACHE_DIR=$HOME/.ccache" >> "$GITHUB_ENV"
           echo "CCACHE_EXEC=$(command -v ccache)" >> "$GITHUB_ENV"
+          export CCACHE_DIR="$HOME/.ccache"
           ccache -M 30G
           ccache -z
 
@@ -96,6 +107,12 @@ jobs:
         run: |
           repo init --git-lfs -u https://github.com/LineageOS/android.git -b lineage-20.0
           repo sync -c -j"$(nproc)" --force-sync --no-clone-bundle --no-tags
+
+      - name: Sanity check prebuilt clang libraries
+        run: |
+          if ldd prebuilts/clang/host/linux-x86/clang-3289846/bin/clang.real | grep "not found"; then
+            echo "Missing shared libraries for prebuilt clang"; exit 1
+          fi
 
       - name: Build ROM + vendor_boot (recovery)
         run: |
