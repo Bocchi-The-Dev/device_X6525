@@ -321,6 +321,8 @@ PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/ramdisk/lib/modules/modules.alias:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules/modules.alias \
       $(LOCAL_PATH)/recoveryx/ramdisk/lib/modules/modules.dep:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules/modules.dep \
       $(LOCAL_PATH)/recoveryx/ramdisk/lib/modules/modules.load:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules/modules.load \
+      $(LOCAL_PATH)/recoveryx/ramdisk/lib/modules/modules.load.recovery:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules/modules.load.recovery \
+      $(LOCAL_PATH)/recoveryx/ramdisk/lib/modules/modules.softdep:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules/modules.softdep \
 
 
 # All ueventd files for ramdisk.cpio
@@ -364,6 +366,7 @@ PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/recovery/lib/modules/modules.dep:$(TARGET_COPY_OUT_RECOVERY)/root/lib/modules/modules.dep \
       $(LOCAL_PATH)/recoveryx/recovery/lib/modules/modules.load:$(TARGET_COPY_OUT_RECOVERY)/root/lib/modules/modules.load \
       $(LOCAL_PATH)/recoveryx/recovery/lib/modules/modules.load.recovery:$(TARGET_COPY_OUT_RECOVERY)/root/lib/modules/modules.load.recovery \
+      $(LOCAL_PATH)/recoveryx/recovery/lib/modules/modules.softdep:$(TARGET_COPY_OUT_RECOVERY)/root/lib/modules/modules.softdep \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.module.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.module.rc
 
 # Vendor HALs for recovery
