@@ -101,8 +101,9 @@ jobs:
         run: |
           source build/envsetup.sh
           lunch "$LUNCH_TARGET"
-          # bacon builds the OTA; vendor_bootimage holds the LOS recovery ramdisk
-          mka bacon vendor_bootimage -j"$(nproc)"
+          # bacon builds the OTA; vendorbootimage (no underscore) holds the LOS
+          # recovery ramdisk
+          mka bacon vendorbootimage -j"$(nproc)"
 
       - name: ccache statistics
         if: always()
