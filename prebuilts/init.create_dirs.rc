@@ -1,6 +1,6 @@
 # Copyright (C) 2025 The LineageOS Project
 #
-# Create missing directories for Unisoc RE58C2 boot
+# Create missing directories for Unisoc X6525 boot
 #
 
 on early-init

@@ -1,6 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(filter RE58C2,$(TARGET_DEVICE)),)
+ifneq ($(filter X6525,$(TARGET_DEVICE)),)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := init.recovery.$(TARGET_DEVICE)

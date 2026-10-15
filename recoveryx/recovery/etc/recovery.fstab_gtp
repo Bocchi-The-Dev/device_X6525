@@ -1,4 +1,4 @@
-# Android fstab file for RE58C2 Recovery
+# Android fstab file for X6525 Recovery
 #<src>                                          <mnt_point>         <type>    <mnt_flags>                                                          <fs_mgr_flags>
 
 # System partitions (A/B)

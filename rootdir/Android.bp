@@ -222,15 +222,15 @@ prebuilt_etc {
 }
 
 prebuilt_etc {
-    name: "init.ums9230_hulk.rc",
-    src: "etc/init.ums9230_hulk.rc",
+    name: "init.X6525.rc",
+    src: "etc/init.X6525.rc",
     sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
-    name: "init.ums9230_hulk.usb.rc",
-    src: "etc/init.ums9230_hulk.usb.rc",
+    name: "init.X6525.usb.rc",
+    src: "etc/init.X6525.usb.rc",
     sub_dir: "init/hw",
     vendor: true,
 }

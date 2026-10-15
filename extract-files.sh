@@ -8,8 +8,8 @@
 
 set -e
 
-DEVICE=RE58C2
-VENDOR=realme
+DEVICE=X6525
+VENDOR=infinix
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"

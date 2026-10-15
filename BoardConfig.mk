@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/realme/RE58C2
-KERNEL_PATH := device/realme/RE58C2/prebuilts
+DEVICE_PATH := device/infinix/X6525
+KERNEL_PATH := device/infinix/X6525/prebuilts
 
 # Build system flags
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
@@ -35,7 +35,7 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 # Platform
 TARGET_BOARD_PLATFORM := ums9230
 
-TARGET_OTA_ASSERT_DEVICE := RE58C2
+TARGET_OTA_ASSERT_DEVICE := X6525
 TARGET_NO_BOOTLOADER := true
 
 # Display
@@ -86,7 +86,7 @@ BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 
 
 BOARD_KERNEL_CMDLINE := \
-    androidboot.hardware=ums9230_hulk \
+    androidboot.hardware=X6525 \
     androidboot.selinux=permissive \
     androidboot.dtbo_idx=7 \
     loop.max_part=7 \
@@ -116,8 +116,8 @@ BOARD_PREBUILT_DTBIMAGE := $(TARGET_PREBUILT_DTB)
 BOARD_PREBUILT_DTBOIMAGE := $(TARGET_PREBUILT_DTBO)
 
 # Kernel source (for headers only)
-TARGET_KERNEL_SOURCE := kernel/realme/RE58C2
-TARGET_KERNEL_CONFIG := RE58C2_defconfig
+TARGET_KERNEL_SOURCE := kernel/infinix/X6525
+TARGET_KERNEL_CONFIG := X6525_defconfig
 
 
 LOCAL_KERNEL := $(DEVICE_PATH)/prebuilts/kernel
@@ -152,9 +152,9 @@ BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 104857600
 
 # Super partition configuration
 BOARD_SUPER_PARTITION_SIZE := 8388608000  # 8.3 GB (keep original)
-BOARD_SUPER_PARTITION_GROUPS := realme_dynamic_partitions
-BOARD_REALME_DYNAMIC_PARTITIONS_SIZE := 7516192768  # 7.0 GB (keep original)
-BOARD_REALME_DYNAMIC_PARTITIONS_PARTITION_LIST := system product system_ext vendor odm vendor_dlkm
+BOARD_SUPER_PARTITION_GROUPS := infinix_dynamic_partitions
+BOARD_INFINIX_DYNAMIC_PARTITIONS_SIZE := 7516192768  # 7.0 GB (keep original)
+BOARD_INFINIX_DYNAMIC_PARTITIONS_PARTITION_LIST := system product system_ext vendor odm vendor_dlkm
 
 # FINAL CORRECTED PARTITION SIZES:
 
@@ -247,11 +247,11 @@ SKIP_VINTF_CHECK := true
 
 # VINTF Compatibility Matrix - Keep your file but the flags above will ignore the IPC restriction
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    vendor/realme/RE58C2/proprietary/product/etc/vintf/compatibility_matrix.xml
+    vendor/infinix/X6525/proprietary/product/etc/vintf/compatibility_matrix.xml
 
 
 # ODM manifests
-# ODM_MANIFEST_FILES += vendor/realme/RE58C2/proprietary/odm/etc/vintf/manifest_nfc.xml
+# ODM_MANIFEST_FILES += vendor/infinix/X6525/proprietary/odm/etc/vintf/manifest_nfc.xml
 
 # EROFS for OTA updates
 # BOARD_USES_EROFS_POSTINSTALL := true
@@ -260,7 +260,7 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
 TARGET_FLATTEN_APEX := false
 
 
-# In device/realme/RE58C2/BoardConfigCommon.mk
+# In device/infinix/X6525/BoardConfigCommon.mk
 # This is the STOCK bootclasspath. Use it verbatim.
 # BOOTCLASSPATH := \
     /system/framework/framework.jar \
@@ -314,7 +314,7 @@ TARGET_KEYMINT_VERSION := 2.0
 
 # SELinux
 BOARD_SEPOLICY_VERS := 33.0
-BOARD_VENDOR_SEPOLICY_DIRS += device/realme/RE58C2/sepolicy/vendor
+BOARD_VENDOR_SEPOLICY_DIRS += device/infinix/X6525/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # Vold

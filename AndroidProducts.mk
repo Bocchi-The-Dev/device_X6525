@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_RE58C2.mk
+    $(LOCAL_DIR)/lineage_X6525.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_RE58C2-user \
-    lineage_RE58C2-userdebug \
-    lineage_RE58C2-eng
+    lineage_X6525-user \
+    lineage_X6525-userdebug \
+    lineage_X6525-eng

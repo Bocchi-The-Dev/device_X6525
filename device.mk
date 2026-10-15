@@ -28,13 +28,13 @@ PRODUCT_SHIPPING_API_LEVEL := 33
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Soong Configuration
-SOONG_CONFIG_NAMESPACES += realme_RE58C2
-SOONG_CONFIG_realme_RE58C2 += use_vendor_bp
-SOONG_CONFIG_realme_RE58C2_use_vendor_bp := true
+SOONG_CONFIG_NAMESPACES += infinix_X6525
+SOONG_CONFIG_infinix_X6525 += use_vendor_bp
+SOONG_CONFIG_infinix_X6525_use_vendor_bp := true
 
 PRODUCT_SOONG_NAMESPACES += \
-    device/realme/RE58C2 \
-    vendor/realme/RE58C2 \
+    device/infinix/X6525 \
+    vendor/infinix/X6525 \
 
 
 # disable usb temp for debug
@@ -130,25 +130,25 @@ PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 # ===========================
 # VINTF CONFIGURATION - MINIMAL
 # ===========================
-DEVICE_MANIFEST_FILE += device/realme/RE58C2/manifest.xml
+DEVICE_MANIFEST_FILE += device/infinix/X6525/manifest.xml
 PRODUCT_ENFORCE_VINTF_MANIFEST := true
 
 # KEEP ONLY WORKING MANIFESTS - REMOVE FAILING ONES
 # 10-11-25 DEVICE_MANIFEST_FILE += \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.drm-service.clearkey.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.wifi.hostapd.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.wifi.supplicant.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/lights.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/vibrator.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.gatekeeper@1.0-service.trusty.xml\
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.health-service.example.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/vendor-power-default.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.security.keymint@2.0-unisoc.service.trusty.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/vendor.sprd.hardware.boot@1.2.xml \
-    vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.thermal@2.0-service.xml  
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.drm-service.clearkey.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.wifi.hostapd.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.wifi.supplicant.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/lights.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/vibrator.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.gatekeeper@1.0-service.trusty.xml\
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.health-service.example.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/vendor-power-default.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.security.keymint@2.0-unisoc.service.trusty.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/vendor.sprd.hardware.boot@1.2.xml \
+    vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.thermal@2.0-service.xml  
 
 
-  #  vendor/realme/RE58C2/proprietary/vendor/etc/vintf/manifest/android.hardware.biometrics.fingerprint@2.1-service.xml \
+  #  vendor/infinix/X6525/proprietary/vendor/etc/vintf/manifest/android.hardware.biometrics.fingerprint@2.1-service.xml \
 
 
 # ===========================
@@ -194,7 +194,7 @@ PRODUCT_PACKAGES += \
 # ===========================
 # VENDOR BLOBS + gapps
 # ===========================
-$(call inherit-product, vendor/realme/RE58C2/RE58C2-vendor.mk)
+$(call inherit-product, vendor/infinix/X6525/X6525-vendor.mk)
 #$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 
 
@@ -256,8 +256,8 @@ PRODUCT_PACKAGES += \
     init.ums9230_7h10.usb.rc \
     init.ums9230_haps.rc \
     init.ums9230_haps.usb.rc \
-    init.ums9230_hulk.rc \
-    init.ums9230_hulk.usb.rc \
+    init.X6525.rc \
+    init.X6525.usb.rc \
     init.ums9230_nico.rc \
     init.ums9230_nico.usb.rc \
     init.ums9230_zebu.rc \
@@ -302,7 +302,7 @@ PRODUCT_PACKAGES += \
 
 # Copy entire system folder with all files
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,device/realme/RE58C2/recoveryx/ramdisk/system,$(TARGET_COPY_OUT_VENDOR_RAMDISK)/system)
+    $(call find-copy-subdir-files,*,device/infinix/X6525/recoveryx/ramdisk/system,$(TARGET_COPY_OUT_VENDOR_RAMDISK)/system)
 
 
 # Vendor HALs for normal boot
@@ -326,7 +326,7 @@ PRODUCT_COPY_FILES += \
 # All ueventd files for ramdisk.cpio
 PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.module.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.module.rc \
-      $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.RE58C2.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.RE58C2.rc \
+      $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.X6525.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.X6525.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.RMX3624.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.RMX3624.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_1h10.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_1h10.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_1h10_go.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_1h10_go.rc \
@@ -335,14 +335,13 @@ PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_6h10.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_6h10.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_7h10.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_7h10.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_haps.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_haps.rc \
-      $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_hulk.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_hulk.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_nico.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_nico.rc \
       $(LOCAL_PATH)/recoveryx/ramdisk/ueventd.ums9230_zebu.rc:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/ueventd.ums9230_zebu.rc
 
 # All fstab files for first stage ramdisk
 PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.module:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.module \
-      $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.RE58C2:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.RE58C2 \
+      $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.X6525:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.X6525 \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.RMX3624:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.RMX3624 \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_1h10:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_1h10 \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_1h10_go:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_1h10_go \
@@ -351,7 +350,6 @@ PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_6h10:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_6h10 \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_7h10:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_7h10 \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_haps:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_haps \
-      $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_hulk:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_hulk \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_nico:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_nico \
       $(LOCAL_PATH)/recoveryx/ramdisk/first_stage_ramdisk/fstab.ums9230_zebu:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.ums9230_zebu
 
@@ -383,12 +381,12 @@ PRODUCT_COPY_FILES += $(foreach file,$(RECOVERY_MODULES),\
 
 PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/recovery/init.recovery.common.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.common.rc \
-      $(LOCAL_PATH)/recoveryx/recovery/init.recovery.ums9230_hulk.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.ums9230_hulk.rc
+      $(LOCAL_PATH)/recoveryx/recovery/init.recovery.X6525.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.X6525.rc
 
 # All ueventd files for recovery.cpio
 PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.module.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.module.rc \
-      $(LOCAL_PATH)/recoveryx/recovery/ueventd.RE58C2.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.RE58C2.rc \
+      $(LOCAL_PATH)/recoveryx/recovery/ueventd.X6525.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.X6525.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.RMX3624.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.RMX3624.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_1h10.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_1h10.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_1h10_go.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_1h10_go.rc \
@@ -397,7 +395,6 @@ PRODUCT_COPY_FILES += \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_6h10.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_6h10.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_7h10.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_7h10.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_haps.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_haps.rc \
-      $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_hulk.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_hulk.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_nico.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_nico.rc \
       $(LOCAL_PATH)/recoveryx/recovery/ueventd.ums9230_zebu.rc:$(TARGET_COPY_OUT_RECOVERY)/root/ueventd.ums9230_zebu.rc
 

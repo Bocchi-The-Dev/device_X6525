@@ -9,7 +9,7 @@
     # =============================================
 
     # 1. Inherit from device FIRST (most specific)
-    $(call inherit-product, device/realme/RE58C2/device.mk)
+    $(call inherit-product, device/infinix/X6525/device.mk)
 
     # 2. Inherit core Android components
     $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
@@ -26,7 +26,7 @@
     $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
     # 1. Inherit from device FIRST (most specific)
-    $(call inherit-product, device/realme/RE58C2/device.mk)
+    $(call inherit-product, device/infinix/X6525/device.mk)
 
 
     # =============================================
@@ -42,21 +42,22 @@
     # =============================================
 
     # PRODUCT IDENTIFICATION (DEFINE HERE ONLY - REMOVE FROM device.mk)
-    PRODUCT_DEVICE := RE58C2
-    PRODUCT_NAME := lineage_RE58C2
-    PRODUCT_BRAND := realme
-    PRODUCT_MODEL := RE58C2  # Changed from ums9230_hulk_Natv to RE58C2 for consistency
-    PRODUCT_MANUFACTURER := realme
+    PRODUCT_DEVICE := X6525
+    PRODUCT_NAME := lineage_X6525
+    PRODUCT_BRAND := Infinix
+    PRODUCT_MODEL := Infinix X6525
+    PRODUCT_MANUFACTURER := INFINIX
 
     # HARDWARE PLATFORM (DEFINE HERE ONLY - REMOVE FROM device.mk)
     TARGET_BOARD_PLATFORM := ums9230
-    TARGET_BOOTLOADER_BOARD_NAME := ums9230_hulk
+    TARGET_BOOTLOADER_BOARD_NAME := X6525
 
     # GMS CONFIGURATION
-    PRODUCT_GMS_CLIENTID_BASE := android-oppo
+    PRODUCT_GMS_CLIENTID_BASE := android-infinix
 
     # BUILD FINGERPRINT (CRITICAL FOR BOOT - MUST MATCH EXACTLY)
+    # Taken verbatim from the stock X6525 dump (system/system/build.prop)
     PRODUCT_BUILD_PROP_OVERRIDES += \
-        PRIVATE_BUILD_DESC="RE58C2-user 13 TP1A.220624.014 1063 release-keys"
+        PRIVATE_BUILD_DESC="X6525-user 13 TP1A.220624.014 665 release-keys"
 
-    BUILD_FINGERPRINT := realme/RMX3760/RE58C2:13/TP1A.220624.014/T.R4T2.1720264765:user/release-keys
+    BUILD_FINGERPRINT := Infinix/X6525-OP/Infinix-X6525:13/TP1A.220624.014/250919V1964:user/release-keys

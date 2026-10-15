@@ -23,6 +23,6 @@ ro.sr.displaysize.defaultresolution=0
 ro.sr.displaysize.lowresolution=1
 ro.support_one_handed_mode=true
 ro.sys.pwctl.ultrasaving=1
-ro.system.component.label=13-realme/t/sprd/release/ums9230-240706
+ro.system.component.label=13-tran_sprd_t0_W23.07.1_P1_os13.0_mp.rel_230911-250919
 ro.telephony.se.enable=true
 ro.unipnp.switch=true

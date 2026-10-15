@@ -1,4 +1,4 @@
-# Unpinned blobs from ums9230_hulk_Natv-user 13 TP1A.220624.014 1063 release-keys
+# Unpinned blobs from X6525_Natv-user 13 TP1A.220624.014 1063 release-keys
 
 # Audio
 vendor/bin/hw/android.hardware.audio.service
@@ -1476,7 +1476,7 @@ vendor/etc/init/hdcp-default.rc
 vendor/etc/init/hostapd.android.rc
 vendor/etc/init/init.guid.rc
 vendor/etc/init/init.md.rc
-vendor/etc/init/init.ums9230_hulk_Natv.nfc.rc
+vendor/etc/init/init.X6525_Natv.nfc.rc
 vendor/etc/init/lights.rc
 vendor/etc/init/memtrack.rc
 vendor/etc/init/modem_control.rc
@@ -1816,7 +1816,7 @@ vendor/etc/fstab.ums9230_4h10_go
 vendor/etc/fstab.ums9230_6h10
 vendor/etc/fstab.ums9230_7h10
 vendor/etc/fstab.ums9230_haps
-vendor/etc/fstab.ums9230_hulk
+vendor/etc/fstab.X6525
 vendor/etc/fstab.ums9230_nico
 vendor/etc/fstab.ums9230_zebu
 vendor/etc/imsUserAgent.xml
