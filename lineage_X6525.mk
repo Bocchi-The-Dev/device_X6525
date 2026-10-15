@@ -1,63 +1,60 @@
-    #
-    # Copyright (C) 2025 The LineageOS Project
-    #
-    # SPDX-License-Identifier: Apache-2.0
-    #
+#
+# Copyright (C) 2025 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 
-    # =============================================
-    # INHERITANCE (MOST SPECIFIC FIRST)
-    # =============================================
+# =============================================
+# INHERITANCE (MOST SPECIFIC FIRST)
+# =============================================
 
-    # 1. Inherit from device FIRST (most specific)
-    $(call inherit-product, device/infinix/X6525/device.mk)
+# 1. Inherit from device FIRST (most specific)
+$(call inherit-product, device/infinix/X6525/device.mk)
 
-    # 2. Inherit core Android components
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-    #$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+# 2. Inherit core Android components
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-    # 3. Enable updating of APEXes
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+# 3. Enable updating of APEXes
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
-    # 4. A/B partitioning
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
-    $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
+# 4. A/B partitioning
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
-    # 5. Inherit common LineageOS configurations (LEAST specific)
-    $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
-
-    # 1. Inherit from device FIRST (most specific)
-    $(call inherit-product, device/infinix/X6525/device.mk)
+# 5. Inherit common LineageOS configurations (LEAST specific)
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 
-    # =============================================
-    # Force super image generation despite LineageOS patch
-    # =============================================
+# =============================================
+# Force super image generation despite LineageOS patch
+# =============================================
 
-    PRODUCT_BUILD_SUPER_PARTITION := true
-    OVERRIDE_TARGET_FLATTEN_APEX := true
+PRODUCT_BUILD_SUPER_PARTITION := true
+OVERRIDE_TARGET_FLATTEN_APEX := true
 
 
-    # =============================================
-    # DEVICE-SPECIFIC PROPERTIES (MUST COME AFTER ALL INHERITANCE)
-    # =============================================
+# =============================================
+# DEVICE-SPECIFIC PROPERTIES (MUST COME AFTER ALL INHERITANCE)
+# =============================================
 
-    # PRODUCT IDENTIFICATION (DEFINE HERE ONLY - REMOVE FROM device.mk)
-    PRODUCT_DEVICE := X6525
-    PRODUCT_NAME := lineage_X6525
-    PRODUCT_BRAND := Infinix
-    PRODUCT_MODEL := Infinix X6525
-    PRODUCT_MANUFACTURER := INFINIX
+# PRODUCT IDENTIFICATION
+PRODUCT_DEVICE := X6525
+PRODUCT_NAME := lineage_X6525
+PRODUCT_BRAND := Infinix
+PRODUCT_MODEL := Infinix X6525
+PRODUCT_MANUFACTURER := INFINIX
 
-    # HARDWARE PLATFORM (DEFINE HERE ONLY - REMOVE FROM device.mk)
-    TARGET_BOARD_PLATFORM := ums9230
-    TARGET_BOOTLOADER_BOARD_NAME := X6525
+# HARDWARE PLATFORM
+TARGET_BOARD_PLATFORM := ums9230
+TARGET_BOOTLOADER_BOARD_NAME := X6525
 
-    # GMS CONFIGURATION
-    PRODUCT_GMS_CLIENTID_BASE := android-infinix
+# GMS CONFIGURATION
+PRODUCT_GMS_CLIENTID_BASE := android-infinix
 
-    # BUILD FINGERPRINT (CRITICAL FOR BOOT - MUST MATCH EXACTLY)
-    # Taken verbatim from the stock X6525 dump (system/system/build.prop)
-    PRODUCT_BUILD_PROP_OVERRIDES += \
-        PRIVATE_BUILD_DESC="X6525-user 13 TP1A.220624.014 665 release-keys"
+# BUILD FINGERPRINT (CRITICAL FOR BOOT - MUST MATCH EXACTLY)
+# Taken verbatim from the stock X6525 dump (system/system/build.prop)
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRIVATE_BUILD_DESC="X6525-user 13 TP1A.220624.014 665 release-keys"
 
-    BUILD_FINGERPRINT := Infinix/X6525-OP/Infinix-X6525:13/TP1A.220624.014/250919V1964:user/release-keys
+BUILD_FINGERPRINT := Infinix/X6525-OP/Infinix-X6525:13/TP1A.220624.014/250919V1964:user/release-keys
