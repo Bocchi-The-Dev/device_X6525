@@ -131,12 +131,17 @@ PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 # VINTF CONFIGURATION - MINIMAL
 # ===========================
 DEVICE_MANIFEST_FILE += device/infinix/X6525/manifest.xml
-# Build-time VINTF matrix check off: the stock X6525 device manifest declares
-# OEM (Unisoc/Transsion) HALs that stock's framework matrix covers but the
-# stock matrix may disagree with LOS's. Skipping the *build-time* check does not
-# affect runtime VINTF. Higher chance of a successful build/boot.
-PRODUCT_ENFORCE_VINTF_MANIFEST := false
-PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := false
+# NOTE: do NOT try to disable PRODUCT_ENFORCE_VINTF_MANIFEST here.
+#   * a plain assignment is unconditionally overwritten later by config.mk (no-op);
+#   * PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := false *is* honoured, but the
+#     requirements loop in config.mk then forces PRODUCT_FULL_TREBLE := false,
+#     switching off Treble linker namespaces / sepolicy split / VNDK for a device
+#     that runs a stock Treble vendor -- far more damaging than it fixes.
+# Enforcement therefore stays on. The check validates the *installed* VINTF
+# metadata of every partition (vendor manifest + its 32 fragments, odm, product,
+# system) with ro.product.first_api_level=33, i.e. the real stock A13 HAL set.
+# (The kernel-config requirement is already off: see
+# PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS at the top of this file.)
 
 # KEEP ONLY WORKING MANIFESTS - REMOVE FAILING ONES
 # 10-11-25 DEVICE_MANIFEST_FILE += \

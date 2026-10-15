@@ -1,14 +1,14 @@
 name: Build LineageOS 20 (X6525)
 
 on:
+  # Manual only: pushes must never start a build (costs Namespace minutes).
+  # Dispatch with:  gh workflow run "Build LineageOS 20 (X6525)" --ref working
   workflow_dispatch:
     inputs:
       clean:
         description: "Wipe ccache before building"
         type: boolean
         default: false
-  push:
-    branches: [ working ]
 
 concurrency:
   group: build-${{ github.ref }}
@@ -120,7 +120,9 @@ jobs:
           retention-days: 14
 
       - name: Upload flashable images
-        if: success()
+        # Images are complete before the build-time VINTF check runs, so salvage
+        # boot/vendor_boot/dtbo even if a later packaging step fails.
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lineage-20.0-${{ env.DEVICE }}-images

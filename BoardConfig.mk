@@ -35,6 +35,18 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 # Platform
 TARGET_BOARD_PLATFORM := ums9230
 
+# VNDK (Treble)
+# Stock X6525 advertises ro.vndk.version=33 (Android 13 / T606). Use 'current':
+# on LOS 20 PLATFORM_VNDK_VERSION is 33, so this installs exactly the VNDK 33
+# libs the stock vendor blobs link against. A literal '33' would be wrong -- LOS
+# 20 ships no prebuilts/vndk/v33 snapshot (only v28..v32).
+# This MUST be set: PRODUCT_SHIPPING_API_LEVEL=33 makes product_config.mk
+# auto-define PRODUCT_PRODUCT_VNDK_VERSION=current, after which config.mk aborts
+# with "PRODUCT_PRODUCT_VNDK_VERSION cannot be defined without defining
+# BOARD_VNDK_VERSION". Without it the stock vendor would also have no VNDK libs
+# on /system to resolve at runtime.
+BOARD_VNDK_VERSION := current
+
 TARGET_OTA_ASSERT_DEVICE := X6525
 TARGET_NO_BOOTLOADER := true
 
