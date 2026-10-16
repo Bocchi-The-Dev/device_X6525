@@ -114,6 +114,20 @@ jobs:
             echo "Missing shared libraries for prebuilt clang"; exit 1
           fi
 
+      - name: Stub kernel source for header generation (prebuilt kernel)
+        # BoardConfig sets TARGET_KERNEL_SOURCE=kernel/infinix/X6525 but the
+        # kernel is prebuilt and that tree is never synced. vendor/lineage's
+        # generated_kernel_includes still runs `make -C $TARGET_KERNEL_SOURCE
+        # headers_install` and fails when the dir is missing. Create a minimal
+        # stub only if no real kernel source is present.
+        run: |
+          KDIR=kernel/infinix/X6525
+          if [ ! -f "$KDIR/Makefile" ]; then
+            mkdir -p "$KDIR"
+            printf 'headers_install:\n\tmkdir -p $(O)/usr/include\n' > "$KDIR/Makefile"
+            echo "Created stub $KDIR/Makefile"
+          fi
+
       - name: Build ROM + vendor_boot (recovery)
         run: |
           source build/envsetup.sh
