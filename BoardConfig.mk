@@ -258,8 +258,9 @@ CHECK_SKIP_KERNEL_CONFIG := true
 SKIP_VINTF_CHECK := true
 
 # VINTF Compatibility Matrix - Keep your file but the flags above will ignore the IPC restriction
+# (stock product matrix + vendor HALs missing from it, and cplog_svc @1-2)
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    vendor/infinix/X6525/proprietary/product/etc/vintf/compatibility_matrix.xml
+    $(DEVICE_PATH)/vintf/framework_compatibility_matrix.xml
 
 
 # ODM manifests
