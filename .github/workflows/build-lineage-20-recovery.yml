@@ -1,0 +1,183 @@
+name: Build LineageOS 20 Recovery (X6525)
+
+on:
+  # Manual only: pushes must never start a build (costs Namespace minutes).
+  # Dispatch with:  gh workflow run "Build LineageOS 20 Recovery (X6525)" --ref working
+  workflow_dispatch:
+    inputs:
+      clean:
+        description: "Wipe ccache before building"
+        type: boolean
+        default: false
+      also_boot:
+        description: "Also build boot.img (prebuilt kernel)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: recovery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  recovery:
+    name: lineage_X6525-userdebug (vendor_boot / recovery only)
+    runs-on: namespace-profile-compile
+    timeout-minutes: 360
+
+    env:
+      PRODUCT: lineage_X6525
+      DEVICE: X6525
+      LUNCH_TARGET: lineage_X6525-userdebug
+
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+                      /usr/local/share/boost /usr/local/.ghcup || true
+          df -h /
+
+      - name: Checkout device tree
+        uses: actions/checkout@v4
+        with:
+          path: device/infinix/X6525
+
+      - name: Checkout vendor tree
+        uses: actions/checkout@v4
+        with:
+          repository: Bocchi-The-Dev/vendor_X6525
+          ref: working
+          path: vendor/infinix/X6525
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -qq
+          PKGS="bc bison build-essential ccache curl flex g++-multilib gcc-multilib \
+                git gnupg gperf imagemagick lib32ncurses-dev \
+                lib32readline-dev lib32z1-dev libelf-dev liblz4-tool \
+                libncurses-dev libsdl1.2-dev \
+                libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool \
+                squashfs-tools xsltproc zip zlib1g-dev python3 python-is-python3 \
+                openjdk-11-jdk unzip git-lfs"
+          for p in $PKGS; do
+            sudo apt-get install -y --no-install-recommends "$p" >/dev/null 2>&1 \
+              || echo "  (skipping unavailable: $p)"
+          done
+          ls -d /usr/lib/jvm/java-11-openjdk-* || true
+
+      - name: Provide legacy libncurses5/libtinfo5 (old prebuilt clang)
+        run: |
+          LIBDIR=/usr/lib/x86_64-linux-gnu
+          sudo ln -sf "$LIBDIR/libncurses.so.6" "$LIBDIR/libncurses.so.5"
+          sudo ln -sf "$LIBDIR/libtinfo.so.6"   "$LIBDIR/libtinfo.so.5"
+          sudo ldconfig
+
+      - name: Restore ccache
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: ccache-${{ github.ref }}-recovery-${{ github.sha }}
+          # also reuse the cache saved by the full ROM workflow
+          restore-keys: |
+            ccache-${{ github.ref }}-
+            ccache-
+
+      - name: Set up build environment
+        run: |
+          if [ "${{ github.event.inputs.clean }}" = "true" ]; then
+            rm -rf ~/.ccache
+          fi
+          mkdir -p ~/bin
+          curl -s https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          git config --global user.name  "X6525 CI"
+          git config --global user.email "ci@x6525.invalid"
+          git config --global color.ui false
+          echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64" >> "$GITHUB_ENV"
+          echo "USE_CCACHE=1"     >> "$GITHUB_ENV"
+          echo "CCACHE_DIR=$HOME/.ccache" >> "$GITHUB_ENV"
+          echo "CCACHE_EXEC=$(command -v ccache)" >> "$GITHUB_ENV"
+          export CCACHE_DIR="$HOME/.ccache"
+          ccache -M 30G
+          ccache -z
+
+      - name: repo init + sync
+        run: |
+          repo init --git-lfs -u https://github.com/LineageOS/android.git -b lineage-20.0
+          repo sync -c -j"$(nproc)" --force-sync --no-clone-bundle --no-tags
+
+      - name: Sanity check prebuilt clang libraries
+        run: |
+          if ldd prebuilts/clang/host/linux-x86/clang-3289846/bin/clang.real | grep "not found"; then
+            echo "Missing shared libraries for prebuilt clang"; exit 1
+          fi
+
+      - name: Stub kernel source for header generation (prebuilt kernel)
+        run: |
+          KDIR=kernel/infinix/X6525
+          if [ ! -f "$KDIR/Makefile" ]; then
+            mkdir -p "$KDIR"
+            printf 'headers_install:\n\tmkdir -p $(O)/usr/include\n' > "$KDIR/Makefile"
+            echo "Created stub $KDIR/Makefile"
+          fi
+
+      - name: Build vendor_boot (LOS recovery ramdisk)
+        run: |
+          source build/envsetup.sh
+          lunch "$LUNCH_TARGET"
+          TARGETS="vendorbootimage"
+          if [ "${{ github.event.inputs.also_boot }}" = "true" ]; then
+            TARGETS="$TARGETS bootimage"
+          fi
+          mka $TARGETS -j"$(nproc)"
+
+      - name: Inspect vendor_boot.img
+        if: success()
+        run: |
+          OUT=out/target/product/${DEVICE}
+          INFO="$OUT/vendor_boot_info.txt"
+          rm -rf /tmp/vb && mkdir -p /tmp/vb
+          {
+            echo "== sha256"; sha256sum "$OUT/vendor_boot.img"
+            echo "== size";   stat -c %s "$OUT/vendor_boot.img"
+            echo "== unpack_bootimg"
+            python3 system/tools/mkbootimg/unpack_bootimg.py \
+              --boot_img "$OUT/vendor_boot.img" --out /tmp/vb --format=info
+            echo "== mkbootimg args"
+            python3 system/tools/mkbootimg/unpack_bootimg.py \
+              --boot_img "$OUT/vendor_boot.img" --out /tmp/vb --format=mkbootimg
+            echo "== ramdisk fragments"
+            for f in /tmp/vb/vendor_ramdisk*; do
+              echo "-- $f"
+              lz4 -dc "$f" | cpio -t 2>/dev/null | wc -l
+              echo -n "   .ko files: "; lz4 -dc "$f" | cpio -t 2>/dev/null | grep -c '\.ko$' || true
+              echo "   fstab / init entries:"
+              lz4 -dc "$f" | cpio -t 2>/dev/null | grep -E 'fstab|^init$|first_stage_init|avbpubkey' | head -20
+            done
+            ls -l /tmp/vb/vendor-ramdisk-by-name 2>/dev/null || true
+          } 2>&1 | tee "$INFO" || true
+
+      - name: ccache statistics
+        if: always()
+        run: ccache -s || true
+
+      - name: Upload vendor_boot (recovery)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lineage-20.0-${{ env.DEVICE }}-vendor_boot
+          path: |
+            out/target/product/${{ env.DEVICE }}/vendor_boot.img
+            out/target/product/${{ env.DEVICE }}/vendor_boot_info.txt
+            out/target/product/${{ env.DEVICE }}/boot.img
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovery-build-log-${{ github.run_id }}
+          path: out/verbose.log.gz
+          if-no-files-found: ignore
+          retention-days: 7
