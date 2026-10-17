@@ -59,7 +59,7 @@
 /lib/modules/rpmb.ko:
 /lib/modules/trusty-pm.ko: /lib/modules/trusty.ko
 /lib/modules/sprd-gsp.ko: /lib/modules/apsys-dvfs.ko /lib/modules/sprd_soc_id.ko /lib/modules/unisoc-iommu.ko /lib/modules/trusty.ko
-/lib/modules/sprd_camera.ko: /lib/modules/sprd-ion.ko /lib/modules/sprd_sensor.ko /lib/modules/sprd_camsys_pw_domain.ko /lib/modules/sprd_flash_drv.ko /lib/modules/trusty-ipc.ko /lib/modules/unisoc-iommu.ko
+/lib/modules/sprd_camera.ko: /lib/modules/sprd_sensor.ko /lib/modules/sprd_camsys_pw_domain.ko /lib/modules/sprd-ion.ko /lib/modules/sprd_flash_drv.ko /lib/modules/trusty-ipc.ko /lib/modules/unisoc-iommu.ko
 /lib/modules/sha1-ce.ko:
 /lib/modules/sprd_power_stat.ko: /lib/modules/sprd_sip_svc.ko
 /lib/modules/spipe.ko: /lib/modules/sipc-core.ko /lib/modules/unisoc-mailbox.ko /lib/modules/sprd_power_manager.ko
@@ -102,12 +102,11 @@
 /lib/modules/phy-sprd-qogirl6.ko: /lib/modules/sprd-bc1p2.ko /lib/modules/sprd_usbpinmux_qogirl6.ko /lib/modules/phy-sprd-commonphy.ko
 /lib/modules/audio_sipc.ko: /lib/modules/audio_mem.ko /lib/modules/agdsp_access.ko /lib/modules/sipc-core.ko /lib/modules/unisoc-mailbox.ko /lib/modules/sprd_power_manager.ko
 /lib/modules/zsmalloc.ko:
-/lib/modules/sprd_cpp.ko: /lib/modules/sprd-ion.ko /lib/modules/sprd_camsys_pw_domain.ko /lib/modules/unisoc-iommu.ko
+/lib/modules/sprd_cpp.ko: /lib/modules/sprd_camsys_pw_domain.ko /lib/modules/sprd-ion.ko /lib/modules/unisoc-iommu.ko
 /lib/modules/pinctrl.ko: /lib/modules/core.ko
 /lib/modules/fpsensor_fp.ko: /lib/modules/tran_hwinfo.ko /lib/modules/ufs-sprd_qogirl6.ko /lib/modules/rpmb.ko /lib/modules/sdhci-sprd.ko /lib/modules/mmc_hsq.ko /lib/modules/mmc_swcq.ko /lib/modules/sprd_soc_id.ko
 /lib/modules/nvmem_sprd_efuse.ko:
 /lib/modules/musb_sprd.ko: /lib/modules/musb_hdrc.ko /lib/modules/sprd_usbpinmux_qogirl6.ko /lib/modules/sc27xx_typec.ko /lib/modules/sprd_tcpm.ko /lib/modules/switch_class.ko /lib/modules/phy-sprd-commonphy.ko
-/lib/modules/sdcard_debug.ko:
 /lib/modules/misc_sprd_uid.ko:
 /lib/modules/sipx.ko: /lib/modules/sipc-core.ko /lib/modules/unisoc-mailbox.ko /lib/modules/sprd_power_manager.ko
 /lib/modules/modules_interface.ko:

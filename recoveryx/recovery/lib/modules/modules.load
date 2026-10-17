@@ -56,4 +56,3 @@ slog_bridge.ko
 sbuf_bridge.ko
 sblock_bridge.ko
 usb_f_vser.ko
-sdcard_debug.ko

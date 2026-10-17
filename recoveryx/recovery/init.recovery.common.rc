@@ -1,55 +1,10 @@
+# SPDX-FileCopyrightText: 2016-2023 Unisoc (Shanghai) Technologies Co., Ltd
+# SPDX-License-Identifier: LicenseRef-Unisoc-General-1.0
 #
 ## Please include it in /init.recovery.${ro.hardware}.rc
 #
 
-service healthd /system/bin/healthd -r
-    critical
-    seclabel u:r:healthd:s0
 
-service create_splloader_dual_slot_byname_path /system/bin/create_splloader_dual_slot_byname_path.sh
-    user root
-    group root system
-    disabled
-    oneshot
-    seclabel u:r:create_spl_link_recovery:s0
-
-service vendor.mlogservice /vendor/bin/mlogservice
-    class main
-    user shell
-    group system root
-
-
-on init
-    # Apply strict SELinux checking of PROT_EXEC on mmap/mprotect calls.
-    write /sys/fs/selinux/checkreqprot 0
-    start healthd
-    start create_splloader_dual_slot_byname_path
-
-    export PATH /sbin:/system/bin:/vendor/bin
-    export SECONDARY_STORAGE /storage/sdcard0
-
-    mkdir /storage
-    mkdir /storage/sdcard1
-    mkdir /storage/sdcard0
-    symlink /storage/sdcard0 /mnt/sdcard
-    symlink /system/etc/bluetooth /etc/bluetooth
-
-    mkdir /systeminfo 0777 system system
-
-    loglevel 7
-
-    chown system root /proc/mdbg/assert
-    chown system root /proc/mdbg/wdtirq
-    chown system root /proc/mdbg/at_cmd
-    chown system root /proc/mdbg/loopcheck
-
-    chmod 760 /proc/mdbg/assert
-    chmod 760 /proc/mdbg/wdtirq
-    chmod 760 /proc/mdbg/at_cmd
-    chmod 760 /proc/mdbg/loopcheck
-
-    chown system root /proc/cpwcn/wdtirq
-    chmod 766 /proc/cpwcn/wdtirq
 
     # Create mount-point for ConfigFS USB gadgets
     # Add standard gadget entries
