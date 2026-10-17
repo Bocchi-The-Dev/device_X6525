@@ -56,6 +56,7 @@ TARGET_SCREEN_DENSITY := 320
 # A/B partitions
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
+    vendor_boot \
     vendor_dlkm \
     system \
     product \
