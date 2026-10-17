@@ -91,6 +91,7 @@ TARGET_NO_RECOVERY := false
 
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_RAMDISK_USE_LZ4 := true
+BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 
 BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -98,14 +99,15 @@ BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 
 
 BOARD_KERNEL_CMDLINE := \
-    androidboot.hardware=X6525 \
+    console=ttyS1,115200n8 \
     androidboot.selinux=permissive \
-    androidboot.dtbo_idx=7 \
     loop.max_part=7 \
-    swiotlb=1 
+    swiotlb=1
 
         
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_OFFSET := 0x00008000
 BOARD_RAMDISK_OFFSET := 0x05400000
 BOARD_TAGS_OFFSET := 0x00000100
